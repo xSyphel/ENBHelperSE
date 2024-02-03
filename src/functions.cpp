@@ -79,6 +79,23 @@ extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
 	return false;
 }
 
+// preticipation
+
+extern "C" DLLEXPORT bool GetPrecipitationInfo(std::uint32_t& precipitationType, float& precipitationIntensity)
+{
+    const auto skyPtr = RE::Sky::GetSingleton();
+    
+    if (skyPtr && skyPtr->currentWeather)
+    {
+        precipitationType = skyPtr->currentWeather->GetPrecipitationType();
+        precipitationIntensity = skyPtr->currentWeather->GetPrecipitationIntensity();
+        return true;
+    }
+
+    return false;
+}
+
+
 // Papyrus Weather.GetClassification
 extern "C" DLLEXPORT int32_t GetClassification(RE::TESWeather* weather)
 {
