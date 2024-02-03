@@ -79,6 +79,26 @@ extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
 	return false;
 }
 
+// exp
+extern "C" DLLEXPORT bool GetFogData(FogData& FogData)
+{
+	const auto weatherPtr = RE::TESWeather::GetSingleton();
+	    
+    if (weatherPtr) {
+        fogData.dayNear = weatherPtr->dayNear;
+        fogData.dayFar = weatherPtr->dayFar;
+        fogData.nightNear = weatherPtr->nightNear;
+        fogData.nightFar = weatherPtr->nightFar;
+        fogData.dayPower = weatherPtr->dayPower;
+        fogData.nightPower = weatherPtr->nightPower;
+        fogData.dayMax = weatherPtr->dayMax;
+        fogData.nightMax = weatherPtr->nightMax;
+
+        return true;
+    }
+    return false;
+}
+
 // Papyrus Weather.GetClassification
 extern "C" DLLEXPORT int32_t GetClassification(RE::TESWeather* weather)
 {
