@@ -79,6 +79,47 @@ extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
 	return false;
 }
 
+// exp
+extern "C" DLLEXPORT bool GetAuroraInStart(float& auroraInStart)
+{
+	const auto skyPtr = RE::Sky::GetSingleton();
+	if (skyPtr) {
+		auroraInStart = skyPtr->auroraInStart;
+		return true;
+	}
+	return false;
+}
+
+extern "C" DLLEXPORT bool GetAuroraIn(float& auroraIn)
+{
+	const auto skyPtr = RE::Sky::GetSingleton();
+	if (skyPtr) {
+		auroraIn = skyPtr->auroraIn;
+		return true;
+	}
+	return false;
+}
+
+extern "C" DLLEXPORT bool GetAuroraOutStart(float& auroraOutStart)
+{
+	const auto skyPtr = RE::Sky::GetSingleton();
+	if (skyPtr) {
+		auroraOutStart = skyPtr->auroraOutStart;
+		return true;
+	}
+	return false;
+}
+
+extern "C" DLLEXPORT bool GetAuroraOut(float& auroraOut)
+{
+	const auto skyPtr = RE::Sky::GetSingleton();
+	if (skyPtr) {
+		auroraOut = skyPtr->auroraOut;
+		return true;
+	}
+	return false;
+}
+
 // Papyrus Weather.GetClassification
 extern "C" DLLEXPORT int32_t GetClassification(RE::TESWeather* weather)
 {
