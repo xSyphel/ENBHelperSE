@@ -80,7 +80,7 @@ extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
 }
 
 // exp
-extern "C" DLLEXPORT bool GetFogData(FogData& fogData)
+extern "C" DLLEXPORT bool GetFogData(RE::TESWeather* fogData)
 {
 	const auto weatherPtr = RE::TESWeather::GetSingleton();
 	    
