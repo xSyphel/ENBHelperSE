@@ -82,7 +82,7 @@ extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
 // exp
 extern "C" DLLEXPORT bool GetFogData(RE::TESWeather* fogData)
 {
-	const auto weatherPtr = RE::TESWeather::GetSingleton();
+	const auto weatherPtr = RE::TESWeather::FogData();
 	    
     if (weatherPtr && weatherPtr->currentLocation) {
         fogData.dayNear = weatherPtr->dayNear;
