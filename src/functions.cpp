@@ -84,7 +84,7 @@ extern "C" DLLEXPORT bool GetFogData(FogData& FogData)
 {
 	const auto weatherPtr = RE::TESWeather::GetSingleton();
 	    
-    if (weatherPtr) {
+    if (weatherPtr && weatherPtr->currentLocation) {
         fogData.dayNear = weatherPtr->dayNear;
         fogData.dayFar = weatherPtr->dayFar;
         fogData.nightNear = weatherPtr->nightNear;
