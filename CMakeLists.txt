@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.28.2)
 
 # ---- Options ----
 
@@ -32,7 +32,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STR
 
 project(
 	ENBHelperSE
-	VERSION 2.2.0
+	VERSION 2.3.0
 	LANGUAGES CXX
 )
 
