@@ -1,12 +1,17 @@
 {
-  "name": "exampleproject",
-  "version-string": "1.0.0",
-  "description": "An example project built using CommonLibSSE",
-  "homepage": "https://github.com/Ryan-rsm-McKenzie/ExamplePlugin-CommonLibSSE",
+  "name": "enbhelperse",
+  "version-string": "2.4.0",
+  "description": "ENB Helper for Skyrim Special Edition.",
+  "homepage": "https://github.com/alandtse/CommonLibVR",
   "license": "MIT",
   "dependencies": [
     "boost-stl-interfaces",
+    "commonlibsse-ng",
     "rsm-binary-io",
-    "spdlog"
-  ]
+    "spdlog",
+    "xbyak",
+    "catch2",
+    "rapidcsv"
+  ],
+  "builtin-baseline": "9a98f93671f984351377044210854900bfd73171"
 }

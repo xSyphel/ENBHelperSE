@@ -1,175 +1,136 @@
-bool isLoaded = false;
-
 extern "C" DLLEXPORT bool IsLoaded()
 {
-	return isLoaded;
+    return isLoaded;
 }
 
 extern "C" DLLEXPORT bool GetCurrentWeather(std::uint32_t& currentWeatherFormID)
 {
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr && skyPtr->currentWeather) {
-		currentWeatherFormID = skyPtr->currentWeather->formID;
-		return true;
-	}
-	return false;
+    const auto* skyPtr = RE::Sky::GetSingleton();
+    if (skyPtr && skyPtr->currentWeather) {
+        currentWeatherFormID = skyPtr->currentWeather->formID;
+        return true;
+    }
+    return false;
 }
 
 extern "C" DLLEXPORT bool GetOutgoingWeather(std::uint32_t& outgoingWeatherFormID)
 {
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr && skyPtr->lastWeather) {
-		outgoingWeatherFormID = skyPtr->lastWeather->formID;
-		return true;
-	}
-	return false;
+    const auto* skyPtr = RE::Sky::GetSingleton();
+    if (skyPtr && skyPtr->lastWeather) {
+        outgoingWeatherFormID = skyPtr->lastWeather->formID;
+        return true;
+    }
+    return false;
 }
 
 extern "C" DLLEXPORT bool GetWeatherTransition(float& weatherTransition)
 {
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr) {
-		weatherTransition = skyPtr->currentWeatherPct;
-		return true;
-	}
-	return false;
+    const auto* skyPtr = RE::Sky::GetSingleton();
+    if (skyPtr) {
+        weatherTransition = skyPtr->currentWeatherPct;
+        return true;
+    }
+    return false;
 }
 
 extern "C" DLLEXPORT bool GetSkyMode(std::uint32_t& skyMode)
 {
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr) {
-		skyMode = skyPtr->mode.underlying();
-		return true;
-	}
-	return false;
+    const auto* skyPtr = RE::Sky::GetSingleton();
+    if (skyPtr) {
+        skyMode = skyPtr->mode.underlying();
+        return true;
+    }
+    return false;
 }
 
 extern "C" DLLEXPORT bool GetTime(float& time)
 {
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr) {
-		time = skyPtr->currentGameHour;
-		return true;
-	}
-	return false;
+    // CHANGE: Use the Calendar singleton, which is a better source for time.
+    const auto* calendar = RE::Calendar::GetSingleton();
+    if (calendar) {
+        time = calendar->GetHour();
+        return true;
+    }
+    return false;
 }
 
 extern "C" DLLEXPORT bool GetCurrentLocationID(std::uint32_t& locationFormID)
 {
-	const auto playerPtr = RE::PlayerCharacter::GetSingleton();
-	if (playerPtr && playerPtr->currentLocation) {
-		locationFormID = playerPtr->currentLocation->formID;
-		return true;
-	}
-	return false;
+    const auto* playerPtr = RE::PlayerCharacter::GetSingleton();
+    if (const auto* location = playerPtr ? playerPtr->GetCurrentLocation() : nullptr; location) {
+        locationFormID = location->formID;
+        return true;
+    }
+    return false;
 }
 
 extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
 {
-	const auto playerPtr = RE::PlayerCharacter::GetSingleton();
-	if (playerPtr && playerPtr->parentCell && (playerPtr->parentCell->cellFlags & RE::TESObjectCELL::Flag::kIsInteriorCell) != RE::TESObjectCELL::Flag::kNone) {
-		worldSpaceFormID = 0x0;
-		return true;
-	}
-	if (playerPtr && playerPtr->GetWorldspace()) {
-		worldSpaceFormID = playerPtr->GetWorldspace()->formID;
-		return true;
-	}
-	return false;
+    const auto* playerPtr = RE::PlayerCharacter::GetSingleton();
+    if (!playerPtr) {
+        return false;
+    }
+
+    if (const auto* parentCell = playerPtr->GetParentCell(); parentCell && parentCell->IsInteriorCell()) {
+        worldSpaceFormID = 0x0;
+        return true;
+    }
+
+    if (const auto* worldSpace = playerPtr->GetWorldspace(); worldSpace) {
+        worldSpaceFormID = worldSpace->formID;
+        return true;
+    }
+    return false;
 }
 
-// exp
-extern "C" DLLEXPORT bool GetAuroraInStart(float& auroraInStart)
-{
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr) {
-		auroraInStart = skyPtr->auroraInStart;
-		return true;
-	}
-	return false;
-}
 
-extern "C" DLLEXPORT bool GetAuroraIn(float& auroraIn)
-{
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr) {
-		auroraIn = skyPtr->auroraIn;
-		return true;
-	}
-	return false;
-}
-
-extern "C" DLLEXPORT bool GetAuroraOutStart(float& auroraOutStart)
-{
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr) {
-		auroraOutStart = skyPtr->auroraOutStart;
-		return true;
-	}
-	return false;
-}
-
-extern "C" DLLEXPORT bool GetAuroraOut(float& auroraOut)
-{
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr) {
-		auroraOut = skyPtr->auroraOut;
-		return true;
-	}
-	return false;
-}
-
-// Papyrus Weather.GetClassification
 extern "C" DLLEXPORT int32_t GetClassification(RE::TESWeather* weather)
 {
-	typedef RE::TESWeather::WeatherDataFlag Flags;
+    using Flags = RE::TESWeather::WeatherDataFlag;
 
-	const auto flags = weather->data.flags;
+    const auto flags = weather->data.flags;
 
-	if ((flags & Flags::kPleasant) != Flags::kNone)
-		return 0;
-	if ((flags & Flags::kCloudy) != Flags::kNone)
-		return 1;
-	if ((flags & Flags::kRainy) != Flags::kNone)
-		return 2;
-	if ((flags & Flags::kSnow) != Flags::kNone)
-		return 3;
+    if (flags.any(Flags::kPleasant))
+        return 0;
+    if (flags.any(Flags::kCloudy))
+        return 1;
+    if (flags.any(Flags::kRainy))
+        return 2;
+    if (flags.any(Flags::kSnow))
+        return 3;
 
-	return 0xFFFFFFFF;
+    return -1;  
 }
 
 extern "C" DLLEXPORT bool GetCurrentWeatherClassification(int32_t& classification)
 {
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr && skyPtr->currentWeather) {
-		classification = GetClassification(skyPtr->currentWeather);
-		return true;
-	}
-	return false;
+    const auto* skyPtr = RE::Sky::GetSingleton();
+    if (skyPtr && skyPtr->currentWeather) {
+        classification = GetClassification(skyPtr->currentWeather);
+        return true;
+    }
+    return false;
 }
 
 extern "C" DLLEXPORT bool GetOutgoingWeatherClassification(int32_t& classification)
 {
-	const auto skyPtr = RE::Sky::GetSingleton();
-	if (skyPtr && skyPtr->lastWeather) {
-		classification = GetClassification(skyPtr->lastWeather);
-		return true;
-	}
-	return false;
+    const auto* skyPtr = RE::Sky::GetSingleton();
+    if (skyPtr && skyPtr->lastWeather) {
+        classification = GetClassification(skyPtr->lastWeather);
+        return true;
+    }
+    return false;
 }
 
 extern "C" DLLEXPORT bool GetPlayerCameraTransformMatrices(RE::NiTransform& m_Local, RE::NiTransform& m_World, RE::NiTransform& m_OldWorld)
 {
-	const auto playerCamera = RE::PlayerCamera::GetSingleton();
-	if (playerCamera && playerCamera->cameraRoot) {
-		const auto cameraNode = playerCamera->cameraRoot;
-
-		memcpy(&m_Local, &(cameraNode->local), sizeof(RE::NiTransform));
-		memcpy(&m_World, &(cameraNode->world), sizeof(RE::NiTransform));
-		memcpy(&m_OldWorld, &(cameraNode->previousWorld), sizeof(RE::NiTransform));
-
-		return true;
-	}
-	return false;
+    const auto* playerCamera = RE::PlayerCamera::GetSingleton();
+    // CHANGE: Use smart pointer .get() and direct assignment instead of memcpy.
+    if (const auto* cameraNode = playerCamera ? playerCamera->cameraRoot.get() : nullptr; cameraNode && cameraNode->world.scale != 0.0f) {
+        m_Local = cameraNode->local;
+        m_World = cameraNode->world;
+        m_OldWorld = cameraNode->previousWorld;
+        return true;
+    }
+    return false;
 }
