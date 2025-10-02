@@ -1,8 +1,8 @@
 {
   "name": "enbhelperse",
-  "version-string": "2.4.0",
+  "version-string": "3.0.0",
   "description": "ENB Helper for Skyrim Special Edition.",
-  "homepage": "https://github.com/alandtse/CommonLibVR",
+  "homepage": "https://github.com/aers/ENBHelperSE",
   "license": "MIT",
   "dependencies": [
     "boost-stl-interfaces",
