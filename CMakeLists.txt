@@ -29,22 +29,16 @@ endif ()
 
 project(
 	ENBHelperSE
-	VERSION 3.0.0
+	VERSION 3.0.1
 	LANGUAGES CXX
 )
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 configure_file(
-	${CMAKE_CURRENT_SOURCE_DIR}/cmake/Version.h.in
-	${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
-	@ONLY
-)
-
-configure_file(
-	${CMAKE_CURRENT_SOURCE_DIR}/cmake/version.rc.in
-	${CMAKE_CURRENT_BINARY_DIR}/version.rc
-	@ONLY
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/version.rc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/version.rc
+    @ONLY
 )
 
 # ---- Include guards ----
@@ -163,11 +157,10 @@ if (MSVC)
 endif ()
 
 target_precompile_headers(
-	${PROJECT_NAME}
-	PRIVATE
-		src/PCH.h
+    ${PROJECT_NAME}
+    PRIVATE
+        src/PCH.h
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE CommonLibSSE::CommonLibSSE)
 
 
 # ---- Post build ----

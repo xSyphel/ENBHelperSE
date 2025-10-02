@@ -1,5 +1,4 @@
 #include "PCH.h"
-#include "Version.h"
 
 bool isLoaded = false;
 
@@ -12,7 +11,7 @@ void InitializeLog()
     if (!path) {
         SKSE::stl::report_and_fail("Failed to find standard logging directory"sv);
     }
-    *path /= fmt::format("{}.log", Version::PROJECT);
+    *path /= fmt::format("{}.log", SKSE::PluginDeclaration::GetSingleton()->GetName());
     auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
 #endif
 
@@ -29,7 +28,8 @@ void InitializeLog()
     spdlog::set_default_logger(std::move(log));
     spdlog::set_pattern("%g(%#): [%^%l%$] %v"s);
 
-    logger::info(FMT_STRING("{} v{}"), Version::PROJECT, Version::NAME);
+    auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+    logger::info(FMT_STRING("{} v{}"), plugin->GetName(), plugin->GetVersion().string());
 }
 
 void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
