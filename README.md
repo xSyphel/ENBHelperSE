@@ -1,21 +1,25 @@
 ## Requirements
 * [CMake](https://cmake.org/)
-	* Add this to your `PATH`
-* [PowerShell](https://github.com/PowerShell/PowerShell/releases/latest)
+    * Add this to your `PATH` during installation.
 * [Vcpkg](https://github.com/microsoft/vcpkg)
-	* Add the environment variable `VCPKG_ROOT` with the value as the path to the folder containing vcpkg
-* [Visual Studio Community 2019](https://visualstudio.microsoft.com/)
-	* Desktop development with C++
-
-## Register Visual Studio as a Generator
-* Open `x64 Native Tools Command Prompt`
-* Run `cmake`
-* Close the cmd window
+    * Add the environment variable `VCPKG_ROOT` with the value as the path to the folder containing vcpkg.
+* [Visual Studio Community 2022](https://visualstudio.microsoft.com/)
+    * Required workload: "Desktop development with C++".
 
 ## Building
-```
-git clone https://github.com/aers/ENBHelperSE
+
+The project will be built into the `build` directory.
+
+powershell:[
+
+# Clone the repository and its submodules
+git clone --recurse-submodules https://github.com/xSyphel/ENBHelperSE
 cd ENBHelperSE
-git submodule update --init --recursive
+
+# Configure the project with CMake. vcpkg will automatically install dependencies.
 cmake -B build -S .
-```
+
+# Build the project (Release configuration)
+cmake --build build --config Release
+
+]
