@@ -8,18 +8,16 @@
 
 ## Building
 
-The project will be built into the `build` directory.
-
 powershell:[
 
 # Clone the repository and its submodules
 git clone --recurse-submodules https://github.com/xSyphel/ENBHelperSE
 cd ENBHelperSE
 
-# Configure the project with CMake. vcpkg will automatically install dependencies.
+# Configure the project with CMake. vcpkg will automatically install dependencies. (Build outside of the source directory)
 cmake -B build -S .
 
-# Build the project (Release configuration)
-cmake --build build --config Release
+# Build the project
+cmake --build . --config Release
 
 ]

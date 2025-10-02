@@ -33,7 +33,6 @@ project(
 	LANGUAGES CXX
 )
 
-
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 configure_file(
@@ -61,7 +60,6 @@ endif()
 
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_DEBUG OFF)
-
 
 # ---- Dependencies ----
 
@@ -110,7 +108,6 @@ target_compile_features(
 		cxx_std_23
 )
 
-
 if (MSVC)
 	target_compile_options(
 		${PROJECT_NAME}
@@ -124,9 +121,7 @@ if (MSVC)
 			/sdl	# Enable Additional Security Checks
 			/utf-8	# Set Source and Executable character sets to UTF-8
 			/Zi	# Debug Information Format
-
 			/permissive-	# Standards conformance
-
 			/Zc:alignedNew	# C++17 over-aligned allocation
 			/Zc:char8_t
 			/Zc:__cplusplus	# Enable updated __cplusplus macro
@@ -144,13 +139,10 @@ if (MSVC)
 			/Zc:ternary	# Enforce conditional operator rules
 			/Zc:tlsGuards
 			/Zc:wchar_t	# wchar_t Is Native Type
-
 			/external:anglebrackets
 			/external:W0
-
 			/W4	# Warning level
 			/WX	# Warning level (warnings are errors)
-
 			"$<$<CONFIG:DEBUG>:>"
 			"$<$<CONFIG:RELEASE>:/Zc:inline;/JMC-;/Ob3>"
 	)
