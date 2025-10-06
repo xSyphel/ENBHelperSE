@@ -13,11 +13,11 @@ These instructions are for building the project from a PowerShell terminal.
 1.  **Clone the repository and its submodules:**
     ```powershell
     git clone --recurse-submodules https://github.com/xSyphel/ENBHelperSE
-    cd ENBHelperSE
     ```
 
 2.  **Configure the project with CMake:**
-    This command creates a `build` directory and prepares the project for compilation. It's crucial to include the `-DCMAKE_TOOLCHAIN_FILE` argument so CMake can find the libraries installed by vcpkg.
+     Create a new build folder outside of ENBHelperSE folder. Inside Build folder you'll need to build the project. 
+     It's crucial to include the `-DCMAKE_TOOLCHAIN_FILE` argument so CMake can find the libraries installed by vcpkg.
     ```powershell
     cmake -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" ../ENBHelperSE
     ```
