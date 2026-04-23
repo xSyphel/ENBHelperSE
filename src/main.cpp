@@ -48,14 +48,14 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 
     SKSE::Init(a_skse);
 
-    auto messaging = SKSE::GetMessagingInterface();
-    if (!messaging->RegisterListener("SKSE", MessageHandler)) {
+    auto* messaging = SKSE::GetMessagingInterface();
+    if (!messaging || !messaging->RegisterListener("SKSE", MessageHandler)) {
         return false;
     }
 
     logger::info("ENBHelperSE loaded");
 
-    // WORKAROUND NOTE: Set isLoaded to true immediately for compatibility with ENB
+    //NOTE: Set isLoaded to true here as the earliest point, otherwise crash.
     isLoaded = true;
 
     return true;
