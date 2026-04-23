@@ -84,7 +84,7 @@ extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
 }
 
 
-extern "C" DLLEXPORT int32_t GetClassification(RE::TESWeather* weather)
+static int32_t GetClassification(RE::TESWeather* weather)
 {
     using Flags = RE::TESWeather::WeatherDataFlag;
 
