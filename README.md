@@ -1,33 +1,26 @@
 ## Requirements
 * [CMake](https://cmake.org/)
     * Add this to your `PATH` during installation.
-* [Vcpkg](https://github.com/microsoft/vcpkg)
-    * Add the environment variable `VCPKG_ROOT` with the value as the path to the folder containing vcpkg.
 * [Visual Studio Community 2022](https://visualstudio.microsoft.com/)
     * Required workload: "Desktop development with C++".
+    * Includes a built-in vcpkg installation — no separate vcpkg setup required.
+* [Vcpkg](https://github.com/microsoft/vcpkg) *(optional — only if not using VS 2022's built-in)*
+    * If using a standalone installation, set the environment variable `VCPKG_ROOT` to the path of your vcpkg folder.
 
 ## Building
 
-These instructions are for building the project from a PowerShell terminal.
+All dependencies, including CommonLibSSE-NG, are installed automatically by vcpkg when CMake configures the project.
 
-1.  **Clone the repository and its submodules:**
+1. **Clone the repository:**
     ```powershell
-    git clone --recurse-submodules https://github.com/xSyphel/ENBHelperSE
+    git clone https://github.com/xSyphel/ENBHelperSE
     ```
 
-2.  **Configure the project with CMake:**
-     Create a new build folder outside of ENBHelperSE folder. Inside Build folder you'll need to build the project. 
-     It's crucial to include the `-DCMAKE_TOOLCHAIN_FILE` argument so CMake can find the libraries installed by vcpkg.
-    ```powershell
-    cmake -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" ../ENBHelperSE
-    ```
-    > **Note:** "../ENBHelperSE" assuming that you're compiling in a build folder outside of ENBHelperSE folder.
+2. **Open the folder in VS Code.**
+    The [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extension will detect the included `CMakePresets.json` automatically.
 
-3.  **Compile the project:**
-    This command builds the `Release` version of the plugin.
-    ```powershell
-    cmake --build . --config Release
-    ```
+3. **Select a configure preset:**
+    Open the Command Palette (`Ctrl+Shift+P`) → CMake: Select Variant → choose Release.
 
-4.  **Locate the DLL:**
-    The compiled plugin, `ENBHelperSE.dll`, will be located in the `build/Release/` directory.
+4. **Build:**
+    Press `F7` or run "CMake: Build" from the Command Palette. The compiled plugin will be at `build/release/Release/ENBHelperSE.dll`.
