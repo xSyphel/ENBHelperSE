@@ -125,7 +125,6 @@ extern "C" DLLEXPORT bool GetOutgoingWeatherClassification(int32_t& classificati
 extern "C" DLLEXPORT bool GetPlayerCameraTransformMatrices(RE::NiTransform& m_Local, RE::NiTransform& m_World, RE::NiTransform& m_OldWorld)
 {
     const auto* playerCamera = RE::PlayerCamera::GetSingleton();
-    // CHANGE: Use smart pointer .get() and direct assignment instead of memcpy.
     if (const auto* cameraNode = playerCamera ? playerCamera->cameraRoot.get() : nullptr; cameraNode && cameraNode->world.scale != 0.0f) {
         m_Local = cameraNode->local;
         m_World = cameraNode->world;
