@@ -9,7 +9,7 @@
 
 ## Building
 
-All dependencies, including CommonLibSSE-NG, are installed automatically by vcpkg when CMake configures the project.
+All dependencies, including CommonLibSSE-NG, are installed automatically by vcpkg when CMake configures the project. Although I do recommend cloning the CommonLibSSE-NG and using .gitignore on it.
 
 1. **Clone the repository:**
     ```powershell
