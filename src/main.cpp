@@ -1,6 +1,6 @@
 #include "PCH.h"
 
-bool isLoaded = false;
+std::atomic<bool> isLoaded = false;
 
 void InitializeLog()
 {

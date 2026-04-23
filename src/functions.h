@@ -1,4 +1,4 @@
 #pragma once
 
-extern bool isLoaded;
+extern std::atomic<bool> isLoaded;
 
