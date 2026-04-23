@@ -1,8 +1,8 @@
 {
-  "name": "enbhelperse",
-  "version-string": "3.0.1",
+  "name": "ENBHelperSE",
+  "version-string": "3.1.0",
   "description": "ENB Helper for Skyrim Special Edition.",
-  "homepage": "https://github.com/aers/ENBHelperSE",
+  "homepage": "https://github.com/xSyphel/ENBHelperSE.git",
   "license": "MIT",
   "dependencies": [
     "boost-stl-interfaces",
