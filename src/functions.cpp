@@ -28,7 +28,7 @@ extern "C" DLLEXPORT bool GetOutgoingWeather(std::uint32_t& outgoingWeatherFormI
 extern "C" DLLEXPORT bool GetWeatherTransition(float& weatherTransition)
 {
     const auto* skyPtr = RE::Sky::GetSingleton();
-    if (skyPtr) {
+    if (skyPtr && std::isfinite(skyPtr->currentWeatherPct)) {
         weatherTransition = skyPtr->currentWeatherPct;
         return true;
     }
@@ -98,7 +98,6 @@ static int32_t GetClassification(RE::TESWeather* weather)
         return 2;
     if (flags.any(Flags::kSnow))
         return 3;
-
     return -1;  
 }
 
