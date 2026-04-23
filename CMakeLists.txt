@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.28)
 project(enbhelperse-build NONE)
 
 if (DEFINED ENV{VCPKG_ROOT})
-    set(VCPKG_TARGET_TRIPLET "x64-windows-static" CACHE STRING "")
+    set(VCPKG_TARGET_TRIPLET "x64-windows-static-md" CACHE STRING "")
 else ()
     message(WARNING "Environment variable VCPKG_ROOT is not set. Continuing without vcpkg.")
 endif ()
