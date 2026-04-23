@@ -1,3 +1,5 @@
+#include "PCH.h"
+
 extern "C" DLLEXPORT bool IsLoaded()
 {
     return isLoaded;
@@ -45,7 +47,6 @@ extern "C" DLLEXPORT bool GetSkyMode(std::uint32_t& skyMode)
 
 extern "C" DLLEXPORT bool GetTime(float& time)
 {
-    // CHANGE: Use the Calendar singleton, which is a better source for time.
     const auto* calendar = RE::Calendar::GetSingleton();
     if (calendar) {
         time = calendar->GetHour();
@@ -82,7 +83,6 @@ extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
     }
     return false;
 }
-
 
 static int32_t GetClassification(RE::TESWeather* weather)
 {
@@ -125,7 +125,7 @@ extern "C" DLLEXPORT bool GetOutgoingWeatherClassification(int32_t& classificati
 extern "C" DLLEXPORT bool GetPlayerCameraTransformMatrices(RE::NiTransform& m_Local, RE::NiTransform& m_World, RE::NiTransform& m_OldWorld)
 {
     const auto* playerCamera = RE::PlayerCamera::GetSingleton();
-    if (const auto* cameraNode = playerCamera ? playerCamera->cameraRoot.get() : nullptr; cameraNode && cameraNode->world.scale != 0.0f) {
+    if (const auto* cameraNode = playerCamera ? playerCamera->cameraRoot.get() : nullptr; cameraNode && std::isfinite(cameraNode->world.scale) && cameraNode->world.scale != 0.0f) {
         m_Local = cameraNode->local;
         m_World = cameraNode->world;
         m_OldWorld = cameraNode->previousWorld;
