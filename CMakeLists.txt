@@ -36,8 +36,8 @@ set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
 
 # ---- Dependencies ----
 
-set(BUILD_TESTS OFF CACHE BOOL FORCE)
-set(ENABLE_SKYRIM_VR OFF CACHE BOOL FORCE)
+set(BUILD_TESTS OFF CACHE BOOL "Disable CommonLibSSE's own tests" FORCE)
+set(ENABLE_SKYRIM_VR OFF CACHE BOOL "ENBHelperSE targets flatscreen SE/AE only; VR support pulls in the OpenVR SDK unnecessarily" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/extern ${CMAKE_CURRENT_BINARY_DIR}/CommonLibSSE EXCLUDE_FROM_ALL)
 include(${CMAKE_CURRENT_SOURCE_DIR}/extern/cmake/CommonLibSSE.cmake)
 
