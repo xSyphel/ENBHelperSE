@@ -14,7 +14,7 @@ endif ()
 
 project(
     ENBHelperSE
-    VERSION 3.1.0
+    VERSION 3.2.0
     LANGUAGES CXX
 )
 
@@ -36,7 +36,10 @@ set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
 
 # ---- Dependencies ----
 
-find_package(CommonLibSSE CONFIG REQUIRED)
+set(BUILD_TESTS OFF CACHE BOOL FORCE)
+set(ENABLE_SKYRIM_VR OFF CACHE BOOL FORCE)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/extern ${CMAKE_CURRENT_BINARY_DIR}/CommonLibSSE EXCLUDE_FROM_ALL)
+include(${CMAKE_CURRENT_SOURCE_DIR}/extern/cmake/CommonLibSSE.cmake)
 
 # ---- Create DLL ----
 

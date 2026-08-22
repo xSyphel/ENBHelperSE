@@ -1,17 +1,42 @@
 {
   "name": "enbhelperse",
-  "version-string": "3.1.0",
+  "version-string": "3.2.0",
   "description": "ENB Helper for Skyrim Special Edition.",
   "homepage": "https://github.com/xSyphel/ENBHelperSE.git",
   "license": "MIT",
   "dependencies": [
-    "boost-stl-interfaces",
-    "commonlibsse-ng",
-    "rsm-binary-io",
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    },
+    {
+      "name": "directxmath",
+      "version>=": "2025-04-03"
+    },
+    {
+      "name": "directxtk",
+      "version>=": "2025-10-27"
+    },
+    {
+      "name": "fmt",
+      "version>=": "12.1.0"
+    },
+    {
+      "name": "nlohmann-json",
+      "version>=": "3.12.0"
+    },
+    {
+      "name": "simpleini",
+      "version>=": "4.25"
+    },
+    {
+      "name": "toml11",
+      "version>=": "4.4.0"
+    },
     "spdlog",
     "xbyak",
     "catch2",
     "rapidcsv"
   ],
-  "builtin-baseline": "9a98f93671f984351377044210854900bfd73171"
+  "builtin-baseline": "127402f1c75bb3d5ff6bce04b285faa4930a5aca"
 }
