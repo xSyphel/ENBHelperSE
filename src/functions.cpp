@@ -58,7 +58,11 @@ extern "C" DLLEXPORT bool GetTime(float& time)
 extern "C" DLLEXPORT bool GetCurrentLocationID(std::uint32_t& locationFormID)
 {
     const auto* playerPtr = RE::PlayerCharacter::GetSingleton();
-    if (const auto* location = playerPtr ? playerPtr->GetCurrentLocation() : nullptr; location) {
+    if (!playerPtr) {
+        return false;
+    }
+
+    if (const auto* location = playerPtr->GetCurrentLocation(); location) {
         locationFormID = location->formID;
         return true;
     }
@@ -72,7 +76,12 @@ extern "C" DLLEXPORT bool GetWorldSpaceID(std::uint32_t& worldSpaceFormID)
         return false;
     }
 
-    if (const auto* parentCell = playerPtr->GetParentCell(); parentCell && parentCell->IsInteriorCell()) {
+    const auto* parentCell = playerPtr->GetParentCell();
+    if (!parentCell) {
+        return false;
+    }
+
+    if (parentCell->IsInteriorCell()) {
         worldSpaceFormID = 0x0;
         return true;
     }
